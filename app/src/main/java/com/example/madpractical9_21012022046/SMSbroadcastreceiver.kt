@@ -7,10 +7,13 @@ import android.os.Build
 import android.provider.Telephony
 
 class SMSbroadcastreceiver : BroadcastReceiver() {
+interface Listner {
+    fun onTextReceived(sPhoneNo: String?, sMsg: String?)
 
+}var listner:Listner?=null
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        TODO("SMSbroadcastreceiver.onReceive() is not implemented")
+
         if (intent.action==Telephony.Sms.Intents.SMS_RECEIVED_ACTION){
             var sphoneNo = ""
             var sSMSBody = ""
@@ -20,8 +23,9 @@ class SMSbroadcastreceiver : BroadcastReceiver() {
                   sSMSBody += smsMessage.messageBody
                 }
 
+
                 if (listner != null) {
-                    lister?.onTextReceived(sphoneNo,sSMSBody)
+                    listner?.onTextReceived(sphoneNo,sSMSBody)
                 }
             }
         }
